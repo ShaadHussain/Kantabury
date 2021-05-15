@@ -15,9 +15,12 @@ viewer = SimplePDFViewer(fd)
 
 print(fd)
 
+page_num = 6
+
 @repeat(every(10).seconds)
 def send_page():
-    page_num = 9
+    # page_num = 9
+    global page_num
     print("Page num:  " + str(page_num))
     viewer.navigate(int(page_num))
     viewer.render()
@@ -40,11 +43,15 @@ def send_page():
 
         smtp.send_message(msg)
     print("----Email sent!-----")
-    # page_num = page_num + 1
+    page_num += 1
 
 while True:
     run_pending()
     time.sleep(1)
+
+# TODO; Internet went down
+# Try https://www.google.com/search?q=python+global+variable+unboundlocalerror&rlz=1C5CHFA_enUS810US810&oq=python+global&aqs=chrome.2.69i57j0j0i67j0l7.4546j0j7&sourceid=chrome&ie=UTF-8
+# AKA google "python global variable unbound local error"
 
 # j = 9
 # schedule.every(20).seconds.do(send_page(j), j)
